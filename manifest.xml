@@ -1,13 +1,13 @@
 <package>
-  <description brief="fast_checkerboard_detector">
+  <description brief="chessboard-tracker">
 
-     fast_checkerboard_detector
+     chessboard-tracker
 
   </description>
-  <author>Christian Kerl</author>
+  <author>Vaibhav Mehta</author>
   <license>BSD</license>
   <review status="unreviewed" notes=""/>
-  <url>http://ros.org/wiki/fast_checkerboard_detector</url>
+  <url>http://ros.org/wiki/chessboard-detector</url>
   <depend package="roscpp"/>
   <depend package="nodelet"/>
   <depend package="std_msgs"/>
