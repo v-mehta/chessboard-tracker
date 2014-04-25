@@ -1,0 +1,7 @@
+<library path="lib/libfast_checkerboard_detector_nodelet">
+  <class name="fast_checkerboard_detector/detector" type="fast_checkerboard_detector::FastCheckerboardDetectorNodelet" base_class_type="nodelet::Nodelet">
+    <description>
+      FastCheckerBoardDetectorNodelet
+    </description>
+  </class>
+</library>

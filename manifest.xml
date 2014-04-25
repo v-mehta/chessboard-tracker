@@ -1,0 +1,27 @@
+<package>
+  <description brief="fast_checkerboard_detector">
+
+     fast_checkerboard_detector
+
+  </description>
+  <author>Christian Kerl</author>
+  <license>BSD</license>
+  <review status="unreviewed" notes=""/>
+  <url>http://ros.org/wiki/fast_checkerboard_detector</url>
+  <depend package="roscpp"/>
+  <depend package="nodelet"/>
+  <depend package="std_msgs"/>
+  <depend package="sensor_msgs"/>
+  <depend package="image_transport"/>
+  <depend package="cv_bridge"/>
+  <depend package="opencv2"/>
+  <depend package="eigen_conversions" />
+  <depend package="common_rosdeps" />
+  <rosdep name="eigen" />
+
+  <export>
+    <nodelet plugin="${prefix}/nodelet_plugins.xml" />
+  </export>
+</package>
+
+
