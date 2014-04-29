@@ -52,6 +52,8 @@ private:
   double rotation[3];
   cv::Mat cv_translation, cv_rotation, cv_distortion;
 
+  std::vector <double> distortion_vector;
+
   cv::Rect roi_;
 
   std::vector<cv::Point2f> corners_;

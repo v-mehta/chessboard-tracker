@@ -11,7 +11,7 @@ FastCheckerboardDetector::FastCheckerboardDetector(ros::NodeHandle& nh, ros::Nod
     it_(nh),
     cv_translation(3, 1, cv::DataType<double>::type, translation),
     cv_rotation(3, 1, cv::DataType<double>::type, rotation),
-    cv_distortion(cv::Mat::zeros(1, 4, cv::DataType<double>::type))
+    cv_distortion(cv::Mat::zeros(1, 5, cv::DataType<float>::type))
   {
     if(!nh_private.getParam("grid_size_x", grid_size_x))
     {
@@ -78,7 +78,7 @@ void FastCheckerboardDetector::handleCameraInfo(const sensor_msgs::CameraInfoCon
 
   intrinsic_matrix_ = cv::Mat(3, 3, cv::DataType<float>::type);
 
-  const double* info_ptr = info->P.begin();
+  const double* info_ptr = info->K.begin();
 
   for(int row_idx = 0; row_idx < intrinsic_matrix_.rows; ++row_idx)
   {
@@ -89,8 +89,13 @@ void FastCheckerboardDetector::handleCameraInfo(const sensor_msgs::CameraInfoCon
         *row_ptr = (float) *info_ptr;
       }
       // skip 4th column
-      info_ptr++;
+      //info_ptr++;
   }
+
+  std::cout << intrinsic_matrix_ << std::endl;
+
+
+  distortion_vector = info->D;
 
   img_subscriber_ = it_.subscribe("camera_image", 1, &FastCheckerboardDetector::handleImageMessage, this);
 }
@@ -115,13 +120,14 @@ void FastCheckerboardDetector::handleImageMessage(const sensor_msgs::ImageConstP
 
     cv::cornerSubPix(image, corners_, cv::Size(4, 4), cv::Size(-1, -1), cv::TermCriteria(CV_TERMCRIT_ITER + CV_TERMCRIT_EPS, 30, 0.01));
     
-    cv::drawChessboardCorners(image, cv::Size(grid_size_x,grid_size_y), cv::Mat(corners_), found_chessboard);
+    //cv::drawChessboardCorners(image, cv::Size(grid_size_x,grid_size_y), cv::Mat(corners_), found_chessboard);
 
-    cv::imshow("Corners",image);
+    //cv::imshow("Corners",image);
 
-    cv::waitKey(5);
+    //cv::waitKey(5);
 
-    cv::solvePnP(object_points_, corners_, intrinsic_matrix_, cv_distortion, cv_rotation, cv_translation);
+
+    cv::solvePnP(object_points_, corners_, intrinsic_matrix_, distortion_vector, cv_rotation, cv_translation);
     
     Eigen::Vector3d rotation_vector(rotation[0], rotation[1], rotation[2]);
     Eigen::Translation3d translation_(translation[0], translation[1], translation[2]);
